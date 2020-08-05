@@ -4,7 +4,7 @@ class Request {
     constructor(options) {
         this.method = options.method || 'post'
         this.host = options. host
-        this.port = options.port || '80'
+        this.port = options.port || '8099'
         this.path = options.path || '/'
         this.body = options.body || {}
         this.headers = options.headers || {}
@@ -40,6 +40,8 @@ class Request {
                     resolve(parser.response)
                     connection.end()
                 }
+            }, err =>{
+                console.log(err)
             })
             connection.on('error', err => {
                 reject(err)
@@ -49,9 +51,9 @@ class Request {
     }
     toString() {
         return `${this.method} ${this.path} HTTP/1.1\r
-        ${Object.keys(this.headers).map(key => `${key}: ${this.headers[key]}`).join('\r\n')}\r
-        \r
-        ${this.bodyText}`
+${Object.keys(this.headers).map(key => `${key}: ${this.headers[key]}`).join('\r\n')}\r
+\r
+${this.bodyText}`
     }
 }
 
@@ -75,13 +77,14 @@ void async function () {
     let request = new Request({
         method: 'POST',
         host: '127.0.0.1',
-        port: '8090',
+        port: '8099',
         path: '/',
         headers: {
             ['X-Foo2']: 'customed'
         },
         body: {
-            name: 'Cviler'
+            name: 'Cviler',
+            age: 18
         }
     })
 

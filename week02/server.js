@@ -5,12 +5,14 @@ http.createServer((request, response) => {
     request.on('error', (err) => {
         console.error(err)
     }).on('data', (chunk) => {
-        body.push(chunk.toString())
+        console.log(chunk, 'chunk')
+        body.push(chunk)
     }).on('end', () => {
-        body.Buffer.concat(body).toString()
         console.log('body', body)
-        request.writeHead(200, { 'Content-Type': 'text/html' })
-        request.end('Hello World \n')
+        // body.push(Buffer.from)
+        body = Buffer.concat(body).toString()
+        response.writeHead(200, { 'Content-Type': 'text/html' })
+        response.end('Hello World\n')
     })
-}).listen(8090)
-console.log('server started')
+}).listen(8099)
+console.log('server started....')
